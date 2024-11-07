@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # Import CORS
 import serial
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Set up serial connection to Arduino (update the port to match your system)
 arduino = serial.Serial('/dev/ttyUSB0', 9600)  # Adjust the port as necessary
