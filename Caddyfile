@@ -1,0 +1,39 @@
+# The Caddyfile is an easy way to configure your Caddy web server.
+#
+# Unless the file starts with a global options block, the first
+# uncommented line is always the address of your site.
+#
+# To use your own domain name (with automatic HTTPS), first make
+# sure your domain's A/AAAA DNS records are properly pointed to
+# this machine's public IP, then replace ":80" below with your
+# domain name.
+
+# :80 {
+# 	# Set this path to your site's directory.
+# 	root * /usr/share/caddy
+
+# 	# Enable the static file server.
+# 	file_server
+
+# 	# Another common task is to set up a reverse proxy:
+# 	# reverse_proxy localhost:8080
+
+# 	# Or serve a PHP site through php-fpm:
+# 	# php_fastcgi localhost:9000
+# }
+
+:80 {
+    root * /code/webLED/frontend
+    file_server
+
+    handle_path /led* {
+        reverse_proxy localhost:5000
+        header Access-Control-Allow-Origin "*"  # Allows all origins
+        header Access-Control-Allow-Methods "GET, POST, OPTIONS"  # Add any other methods you need
+        header Access-Control-Allow-Headers "Content-Type, Authorization"  # Add any headers needed
+    }
+}
+
+
+# Refer to the Caddy docs for more information:
+# https://caddyserver.com/docs/caddyfile
